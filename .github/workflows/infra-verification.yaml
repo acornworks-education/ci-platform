@@ -60,12 +60,14 @@ jobs:
     #     path: ./
     #     base: ${{ github.event.repository.default_branch }}
     #     head: HEAD
+    - name: Pull Conftest policy
+      run: conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
     - name: Conftest for Terraform
       uses: YubicoLabs/action-conftest@v3
       with:
         files: terraform/main.tf
         gh-token: ${{ secrets.GITHUB_TOKEN }}
         gh-comment-url: ${{ github.event.pull_request.comments_url }}
-        pull-url: git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
+
 
 
