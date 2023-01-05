@@ -53,9 +53,19 @@ jobs:
                                     --github-token=${{github.token}} \
                                     --pull-request=${{github.event.pull_request.number}} \
                                     --behavior=update
-    - name: TruffleHog Scan
-      uses: trufflesecurity/trufflehog@main
+    # https://github.com/marketplace/actions/trufflehog-oss
+    # - name: TruffleHog Scan
+    #   uses: trufflesecurity/trufflehog@main
+    #   with:
+    #     path: ./
+    #     base: ${{ github.event.repository.default_branch }}
+    #     head: HEAD
+    - name: Conftest for Terraform
+      uses: YubicoLabs/action-conftest@v3
       with:
-        path: ./
-        base: ${{ github.event.repository.default_branch }}
-        head: HEAD
+        files: terraform/main.tf
+        gh-token: ${{ secrets.GITHUB_TOKEN }}
+        gh-comment-url: ${{ github.event.pull_request.comments_url }}
+        pull-url: https://github.com/rallyhealth/conftest-policy-packs/tree/main/policies/terraform
+
+
