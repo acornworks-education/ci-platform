@@ -1,1 +1,3 @@
-terraform/
+terraform/.infracost
+terraform/.terraform
+terraform/.terraform.lock.hcl
