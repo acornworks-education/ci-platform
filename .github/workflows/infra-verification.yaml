@@ -66,6 +66,6 @@ jobs:
         files: terraform/main.tf
         gh-token: ${{ secrets.GITHUB_TOKEN }}
         gh-comment-url: ${{ github.event.pull_request.comments_url }}
-        pull-url: https://github.com/rallyhealth/conftest-policy-packs/tree/main/policies/terraform
+        pull-url: https://github.com/rallyhealth/conftest-policy-packs
 
 
