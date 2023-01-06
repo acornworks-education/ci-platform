@@ -129,6 +129,6 @@ jobs:
         env:
           SONAR_TOKEN: "squ_5a083762b884622e39abd0223c2ef124c602a92b"
           SONAR_HOST_URL: "http://202.138.30.211:60002"
-      - name: Delete a Sonarqube project
-        run: |
-          curl -u squ_5a083762b884622e39abd0223c2ef124c602a92b: -X POST -H "Content-Type: application/x-www-form-urlencoded" http://202.138.30.211:60002/api/projects/delete -d "project=${{env.sonarqube_project_name}}"
+      # - name: Delete a Sonarqube project
+      #   run: |
+      #     curl -u squ_5a083762b884622e39abd0223c2ef124c602a92b: -X POST -H "Content-Type: application/x-www-form-urlencoded" http://202.138.30.211:60002/api/projects/delete -d "project=${{env.sonarqube_project_name}}"
