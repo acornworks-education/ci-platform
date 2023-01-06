@@ -66,13 +66,7 @@ jobs:
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         brew install conftest
         conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
-        ls -al
-    - name: Conftest for Terraform
-      uses: YubicoLabs/action-conftest@v3
-      with:
-        files: ./terraform/main.tf
-        gh-token: ${{ secrets.GITHUB_TOKEN }}
-        gh-comment-url: ${{ github.event.pull_request.comments_url }}
+        conftest test -terraform/main.tf --output=github
 
 
 
