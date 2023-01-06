@@ -6,10 +6,10 @@ on:
     branches:
       - main
 jobs:
-  # infracost-analysis:
-  #   name: Cloud cost analysis
-  #   runs-on: ubuntu-latest
-  #   steps:
+  infracost-analysis:
+    name: Cloud cost analysis
+    runs-on: ubuntu-latest
+    steps:
     # https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions
     # - name: Configure AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v1
@@ -19,8 +19,8 @@ jobs:
     #     aws-region: ap-southeast-2
     #     role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
     #     role-duration-seconds: 1200
-    # - name: Checkout Source Code
-    #   uses: actions/checkout@v3
+    - name: Checkout Source Code
+      uses: actions/checkout@v3
     # # https://github.com/infracost/actions/
     # - name: Setup Infracost
     #   uses: infracost/actions/setup@v2
@@ -54,23 +54,21 @@ jobs:
     #                                 --pull-request=${{github.event.pull_request.number}} \
     #                                 --behavior=update
     # https://github.com/marketplace/actions/trufflehog-oss
-    # - name: TruffleHog Scan
-    #   uses: trufflesecurity/trufflehog@main
-    #   with:
-    #     path: ./
-    #     base: ${{ github.event.repository.default_branch }}
-    #     head: HEAD
-  conftest:
-    runs-on: ubuntu-latest
-    container: openpolicyagent/conftest:latest
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v2
-      - name: Validate Terraform policy
-        run: |
-          conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
-          conftest test -p ./policy --all-namespaces -o table --no-fail ./terraform/main.tf > result.table
-          gh pr comment ${{github.event.pull_request.number}} -F result.table
-          conftest test -p ./policy --all-namespaces -o github ./terraform/main.tf
+    - name: TruffleHog Scan
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: ${{ github.event.repository.default_branch }}
+        head: HEAD
+  # conftest:
+  #   runs-on: ubuntu-latest
+  #   container: openpolicyagent/conftest:latest
+  #   steps:
+  #     - name: Code checkout
+  #       uses: actions/checkout@v2
+  #     - name: Validate Terraform policy
+  #       run: |
+  #         conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
+  #         conftest test -p ./policy --all-namespaces -o github ./terraform/main.tf
 
 
