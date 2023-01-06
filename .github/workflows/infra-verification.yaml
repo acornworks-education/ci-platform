@@ -6,10 +6,10 @@ on:
     branches:
       - main
 jobs:
-  infracost-analysis:
-    name: Cloud cost analysis
-    runs-on: ubuntu-latest
-    steps:
+  # infracost-analysis:
+  #   name: Cloud cost analysis
+  #   runs-on: ubuntu-latest
+  #   steps:
     # https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions
     # - name: Configure AWS Credentials
     #   uses: aws-actions/configure-aws-credentials@v1
@@ -19,8 +19,8 @@ jobs:
     #     aws-region: ap-southeast-2
     #     role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
     #     role-duration-seconds: 1200
-    - name: Checkout Source Code
-      uses: actions/checkout@v3
+    # - name: Checkout Source Code
+    #   uses: actions/checkout@v3
     # # https://github.com/infracost/actions/
     # - name: Setup Infracost
     #   uses: infracost/actions/setup@v2
@@ -60,20 +60,15 @@ jobs:
     #     path: ./
     #     base: ${{ github.event.repository.default_branch }}
     #     head: HEAD
-    - name: Run Conftest
-      run: |
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        brew install conftest
-        conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
-        conftest test -p ./policy ./terraform/main.tf --all-namespaces --output=github > comment.payload
-    - name: Add a comment for a Conftest result
-      if: always()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PULL_REQUEST:  ${{github.event.pull_request.number}}
-      run: |
-        gh pr comment $PULL_REQUEST --body "$(cat comment.payload)"
-
+  conftest:
+    runs-on: ubuntu-latest
+    container: openpolicyagent/conftest:latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+      - name: Validate Kubernetes policy
+        run: |
+          conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
+          conftest test -p ./policy ./terraform/main.tf --all-namespaces --output=github
 
 
