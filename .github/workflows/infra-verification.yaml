@@ -66,9 +66,9 @@ jobs:
     steps:
       - name: Code checkout
         uses: actions/checkout@v2
-      - name: Validate Kubernetes policy
+      - name: Validate Terraform policy
         run: |
           conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
-          conftest test -p ./policy ./terraform/main.tf --all-namespaces --output=github
+          conftest test -p ./policy --all-namespaces -o github ./terraform/main.tf
 
 
