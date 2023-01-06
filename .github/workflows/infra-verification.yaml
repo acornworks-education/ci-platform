@@ -72,7 +72,6 @@ jobs:
       with:
         files: terraform/main.tf
         gh-token: ${{ secrets.GITHUB_TOKEN }}
-        gh-comment-url: ${{ github.event.pull_request.comments_url }}
 
 
 
