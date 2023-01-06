@@ -70,6 +70,7 @@ jobs:
     - name: Add a comment for a Conftest result
       if: always()
       run: |
+        echo ${{github.token}}
         curl \
         -X POST \
         -H "Accept: application/vnd.github+json" \
