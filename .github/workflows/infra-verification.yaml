@@ -68,6 +68,8 @@ jobs:
     runs-on: ubuntu-latest
     container: trufflesecurity/trufflehog:latest
     steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
       - name: TruffleHog Scan
         run: |
           trufflehog filesystem --directory=. --only-verified
