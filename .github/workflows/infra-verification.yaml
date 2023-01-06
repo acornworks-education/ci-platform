@@ -69,6 +69,8 @@ jobs:
       - name: Validate Terraform policy
         run: |
           conftest pull git::https://github.com/rallyhealth/conftest-policy-packs.git//policies
+          conftest test -p ./policy --all-namespaces -o table --no-fail ./terraform/main.tf > result.table
+          gh pr comment ${{github.event.pull_request.number}} -F result.table
           conftest test -p ./policy --all-namespaces -o github ./terraform/main.tf
 
 
