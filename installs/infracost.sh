@@ -13,4 +13,4 @@ helm install cloud-pricing-api infracost/cloud-pricing-api \
 
 # helm --namespace infracost uninstall cloud-pricing-api
 
-kubectl -n infracost patch svc cloud-pricing-api -p '{ "spec": { "ports": [{ "name": "http", "port": 60001 }], "type": "LoadBalancer" } }' --type merge
+kubectl -n infracost expose deploy cloud-pricing-api --port 60001 --target-port 4000 --type LoadBalancer --name cloud-pricing-api-60001

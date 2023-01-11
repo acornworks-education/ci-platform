@@ -1,0 +1,29 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: default-runner
+  namespace: runners
+spec:
+  replicas: 1
+  template:
+    spec:
+      repository: acornworks-education/ci-project-price
+      labels:
+        - acornworks
+      ephemeral: false
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: default-runner
+  namespace: runners
+spec:
+  minReplicas: 1
+  maxReplicas: 10
+  scaleTargetRef:
+    kind: RunnerDeployment
+    name: default-runner
+  scaleUpTriggers:
+    - githubEvent:
+        workflowJob: {}
+      duration: "30m"
