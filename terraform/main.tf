@@ -16,7 +16,7 @@ provider "aws" {
   region = "ap-southeast-2"
 
   assume_role {
-    role_arn = "arn:aws:iam::614643435268:role/ci-provisioning-role"
+    role_arn = "arn:aws:iam::123456789012:role/ci-provisioning-role"
   }
 }
 
