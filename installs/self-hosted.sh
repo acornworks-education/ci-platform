@@ -6,7 +6,7 @@ helm repo add actions-runner-controller https://actions-runner-controller.github
 
 helm upgrade --install --namespace runners --create-namespace\
   --set=authSecret.create=true\
-  --set=authSecret.github_token="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"\
+  --set=authSecret.github_token="ghp_12132132131231"\
   --set "githubWebhookServer.enabled=true"\
   --wait actions-runner-controller actions-runner-controller/actions-runner-controller
 
